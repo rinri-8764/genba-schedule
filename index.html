@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>明日の現場 - 段取り八分を、十分に。</title>
+  <meta name="description" content="現場監督のための段取りアプリ「明日の現場」。夕礼のスピードに追いつく入力で、明日の予定と申し送りをすばやく整理。">
+  <style>
+    :root {
+      --bg: #F2F2F2;
+      --ink: #041A40;
+      --pastel-blue: #A8D8EA;
+      --pastel-orange: #FFB88A;
+      --pastel-yellow: #FFE39B;
+      --pastel-green: #B5E2B5;
+      --card-bg: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== ヒーロー ===== */
+    .hero {
+      text-align: center;
+      padding: 64px 0 48px;
+    }
+
+    .hero .app-icon {
+      width: 112px;
+      height: 112px;
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(4, 26, 64, 0.15);
+      display: block;
+      margin: 0 auto 24px;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .hero .catch {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(transparent 65%, var(--pastel-yellow) 65%);
+      display: inline-block;
+      padding: 0 4px;
+    }
+
+    .hero .lead {
+      font-size: 0.95rem;
+      color: rgba(4, 26, 64, 0.75);
+      max-width: 480px;
+      margin: 0 auto 32px;
+    }
+
+    .store-badge {
+      display: inline-block;
+      background: var(--ink);
+      color: #FFFFFF;
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 12px 28px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: opacity 0.2s;
+    }
+
+    .store-badge:hover {
+      opacity: 0.85;
+    }
+
+    .store-badge small {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 400;
+      opacity: 0.8;
+    }
+
+    /* ===== 特徴 ===== */
+    .features {
+      padding: 32px 0 48px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 32px;
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .feature {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px 20px 20px 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(4, 26, 64, 0.06);
+    }
+
+    /* 色付きの縦帯 */
+    .feature::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+    }
+
+    .feature.blue::before   { background: var(--pastel-blue); }
+    .feature.orange::before { background: var(--pastel-orange); }
+    .feature.yellow::before { background: var(--pastel-yellow); }
+    .feature.green::before  { background: var(--pastel-green); }
+
+    .feature h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      font-size: 0.9rem;
+      color: rgba(4, 26, 64, 0.75);
+    }
+
+    /* ===== PRO ===== */
+    .pro {
+      padding: 16px 0 56px;
+    }
+
+    .pro-card {
+      background: var(--ink);
+      color: #FFFFFF;
+      border-radius: 16px;
+      padding: 32px 24px;
+    }
+
+    .pro-card .pro-label {
+      display: inline-block;
+      background: var(--pastel-yellow);
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 2px 14px;
+      margin-bottom: 12px;
+    }
+
+    .pro-card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .pro-card .pro-note {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    .pro-card ul {
+      list-style: none;
+    }
+
+    .pro-card li {
+      font-size: 0.95rem;
+      padding: 10px 0 10px 28px;
+      position: relative;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .pro-card li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .pro-card li:nth-child(1)::before { background: var(--pastel-blue); }
+    .pro-card li:nth-child(2)::before { background: var(--pastel-orange); }
+    .pro-card li:nth-child(3)::before { background: var(--pastel-green); }
+
+    /* ===== フッター ===== */
+    footer {
+      background: #E5E5E5;
+      padding: 32px 0 40px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    footer nav {
+      margin-bottom: 16px;
+    }
+
+    footer nav a {
+      color: var(--ink);
+      margin: 0 12px;
+      text-decoration: underline;
+    }
+
+    footer .contact {
+      color: rgba(4, 26, 64, 0.75);
+      margin-bottom: 8px;
+    }
+
+    footer .contact a {
+      color: var(--ink);
+    }
+
+    footer .copyright {
+      color: rgba(4, 26, 64, 0.55);
+      font-size: 0.8rem;
+    }
+
+    /* ===== レスポンシブ(タブレット以上) ===== */
+    @media (min-width: 600px) {
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+
+      .feature-list {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .pro-card {
+        padding: 40px 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== ヒーロー ===== -->
+  <header class="hero">
+    <div class="container">
+      <img src="./icon.png" alt="明日の現場 アプリアイコン" class="app-icon">
+      <h1>明日の現場</h1>
+      <p class="catch">段取り八分を、十分に。</p>
+      <p class="lead">
+        外を歩き回る現場監督のための、明日の段取りアプリ。<br>
+        業者の予定と申し送りを、夕礼前にサッとまとめられます。
+      </p>
+      <!--
+        ★ App Store リンク差し替え箇所 ★
+        公開後、以下の href="#" を App Store の URL に差し替えてください。
+        例: https://apps.apple.com/jp/app/idXXXXXXXXXX
+      -->
+      <a href="#" class="store-badge">
+        App Store でダウンロード
+        <small>iPhone 向け</small>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== 特徴 ===== -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">現場のリズムに合わせた4つの特徴</h2>
+      <div class="feature-list">
+        <div class="feature blue">
+          <h3>夕礼のスピードに追いつく入力</h3>
+          <p>タップ中心のすばやい操作で、夕礼で決まった明日の予定をその場で入力。現場を歩きながらでも片手でまとめられます。</p>
+        </div>
+        <div class="feature orange">
+          <h3>1業者の1日をまとめて1件で</h3>
+          <p>「どの業者が・いつ・何をするか」を1件にまとめて登録。細切れの予定を何度も入力する手間がありません。</p>
+        </div>
+        <div class="feature yellow">
+          <h3>時間軸で取り合いが見える</h3>
+          <p>業者ごとの予定を時間軸に並べて表示。作業の重なりや取り合いがひと目でわかり、段取りの穴に事前に気づけます。</p>
+        </div>
+        <div class="feature green">
+          <h3>自分の段取りと申し送りも</h3>
+          <p>業者の予定だけでなく、自分のやることや翌日への申し送りも一緒に記録。明日の朝、迷わず動き出せます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRO ===== -->
+  <section class="pro">
+    <div class="container">
+      <div class="pro-card">
+        <span class="pro-label">PRO</span>
+        <h2>買い切りの PRO 版</h2>
+        <p class="pro-note">一度の購入でずっと使えます。サブスクリプションではありません。</p>
+        <ul>
+          <li>予定の書き出し（共有・記録用）</li>
+          <li>週表示で先の段取りまで確認</li>
+          <li>過去の予定・申し送りの閲覧</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== フッター ===== -->
+  <footer>
+    <div class="container">
+      <nav>
+        <a href="./privacy.html">プライバシーポリシー</a>
+        <a href="./terms.html">利用規約</a>
+      </nav>
+      <p class="contact">お問い合わせ：<a href="mailto:okuapps.0607@gmail.com">okuapps.0607@gmail.com</a></p>
+      <p class="copyright">&copy; 2026 Takuya Okuzawa</p>
+    </div>
+  </footer>
+
+</body>
+</html>
