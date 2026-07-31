@@ -126,7 +126,7 @@
     }
 
     .container-narrow {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
       padding: 0 24px;
     }
@@ -279,6 +279,11 @@
     .steps {
       background: var(--bg);
       padding: 64px 0;
+    }
+
+    /* 画面が広くても左右に散らばらないよう最大幅を絞る */
+    .steps .container {
+      max-width: 1000px;
     }
 
     /* テキストと枠を1つの塊として近接させ、塊同士は大きく離す */
@@ -543,11 +548,12 @@
         font-size: 20px;
       }
 
+      /* テキストと枠は64pxで近接させる。ステップ間の縦120pxより明確に狭い */
       .step {
         flex-direction: row;
         justify-content: center;
         text-align: left;
-        gap: 40px;
+        gap: 64px;
       }
 
       .step-copy {
