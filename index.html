@@ -104,6 +104,21 @@
       border-bottom: 2px solid var(--accent);
     }
 
+    /* 他2ページと同じブレークポイント・サイズでヘッダーを拡大 */
+    @media (min-width: 600px) {
+      .header-brand {
+        font-size: 15px;
+      }
+
+      .header-links {
+        gap: 24px;
+      }
+
+      .header-links a {
+        font-size: 14px;
+      }
+    }
+
     .container {
       max-width: 1040px;
       margin: 0 auto;
