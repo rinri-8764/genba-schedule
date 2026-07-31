@@ -119,14 +119,9 @@
       }
     }
 
+    /* 全セクション共通のコンテンツ幅。テキスト左端の縦線をここで揃える */
     .container {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    .container-narrow {
-      max-width: 720px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 0 24px;
     }
@@ -150,7 +145,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(4, 26, 64, 0.6);
+      color: rgba(4, 26, 64, 0.7);
       font-size: 13px;
     }
 
@@ -196,7 +191,7 @@
       font-size: clamp(30px, 8.5vw, 48px);
       font-weight: 700;
       line-height: 1.4;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
       margin-bottom: 24px;
     }
 
@@ -219,13 +214,14 @@
       width: clamp(150px, 36vw, 175px);
     }
 
-    /* 近日公開ボタン(押せないラベル) */
+    /* 近日公開ラベル。押せるボタンと見分けが付くよう塗りなしの枠線スタイルにする */
     .store-badge {
       display: inline-block;
-      background: var(--ink);
-      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.6);
+      color: rgba(4, 26, 64, 0.65);
+      border: 1px solid rgba(4, 26, 64, 0.3);
       border-radius: 999px;
-      padding: 14px 40px;
+      padding: 13px 39px;
       font-size: 1rem;
       font-weight: 700;
       line-height: 1.5;
@@ -236,7 +232,6 @@
       display: block;
       font-size: 13px;
       font-weight: 400;
-      opacity: 0.85;
     }
 
     /* ===== セクション共通 ===== */
@@ -260,9 +255,11 @@
       padding: 64px 0;
     }
 
+    /* 縦線は構造の目印なのでネイビー。黄は番号・価格などの強調に限定する */
     .problem {
+      max-width: 720px;
       padding: 12px 0 12px 28px;
-      border-left: 4px solid var(--accent);
+      border-left: 4px solid var(--ink);
     }
 
     .problem + .problem {
@@ -270,7 +267,7 @@
     }
 
     .problem h3 {
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.6;
       margin-bottom: 12px;
     }
@@ -347,6 +344,11 @@
       line-height: 1.6;
       letter-spacing: 0.03em;
       margin-bottom: 20px;
+    }
+
+    /* 文節の途中で折り返さない */
+    .todo h2 span {
+      display: inline-block;
     }
 
     .todo p {
@@ -458,6 +460,13 @@
 
     footer .contact a {
       color: var(--ink);
+      text-decoration: underline;
+    }
+
+    /* ホバーで色が変わり、押せることが分かる */
+    footer nav a:hover,
+    footer .contact a:hover {
+      color: rgba(4, 26, 64, 0.55);
     }
 
     footer .copyright {
@@ -506,7 +515,7 @@
         flex-direction: row;
         justify-content: space-between;
         text-align: left;
-        gap: 64px;
+        gap: 40px;
       }
 
       /* 見出し2文がそれぞれ1行に収まる幅を確保 */
@@ -543,26 +552,33 @@
         margin-top: 40px;
       }
 
-      .problem h3,
+      /* 項目見出しは本文(17px)より明確に大きく */
+      .problem h3 {
+        font-size: 22px;
+      }
+
       .step h3 {
         font-size: 20px;
       }
 
-      /* テキストと枠は64pxで近接させる。ステップ間の縦120pxより明確に狭い */
+      /* 全ステップ「左テキスト・右画像」に統一。
+         テキスト列は固定幅580pxで、本文左端と枠左端の縦線を揃える。
+         テキストと枠は64pxで近接させ、ステップ間の縦120pxより明確に狭くする */
       .step {
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-start;
+        align-items: center;
         text-align: left;
         gap: 64px;
       }
 
       .step-copy {
-        max-width: 520px;
+        flex: 0 0 600px;
+        max-width: 600px;
       }
 
-      /* 偶数ステップは画像を左に(説明と画像の対応は隣接で保つ) */
-      .step:nth-of-type(even) {
-        flex-direction: row-reverse;
+      .step p {
+        max-width: none;
       }
 
       .step + .step {
@@ -575,13 +591,19 @@
 
       .todo-inner {
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-start;
+        align-items: center;
         text-align: left;
-        gap: 40px;
+        gap: 64px;
       }
 
       .todo-copy {
-        max-width: 520px;
+        flex: 0 0 600px;
+        max-width: 600px;
+      }
+
+      .todo p {
+        max-width: none;
       }
 
       .pro .price {
@@ -655,7 +677,7 @@
 
   <!-- ===== 2. 課題 ===== -->
   <section class="problems">
-    <div class="container-narrow">
+    <div class="container">
       <h2 class="section-title reveal">こんなことになっていませんか</h2>
       <div class="problem reveal">
         <h3>言われた順に書くから、時間の重なりが見えない</h3>
@@ -743,7 +765,7 @@
   <section class="todo">
     <div class="container todo-inner">
       <div class="todo-copy reveal">
-        <h2>自分のやることは、いつも後回しになる</h2>
+        <h2><span>自分のやることは、</span><span>いつも後回しになる</span></h2>
         <p>
           所長や先輩から頼まれ、職人に呼ばれ、気づけば自分の作業が進んでいない。<br>
           やることリストに残して優先順位を付けておけば、手が空いたときに何から動くか迷いません。
