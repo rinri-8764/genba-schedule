@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>明日の現場 - 段取り八分を、十分に。</title>
-  <meta name="description" content="現場監督のための段取りアプリ「明日の現場」。夕礼のスピードに追いつく入力で、明日の予定と申し送りをすばやく整理。">
+  <title>明日の現場 - 明日、誰が何をするか。聞かれて、すぐ答えられますか。</title>
+  <meta name="description" content="現場監督のための段取りアプリ「明日の現場」。夕礼で次々に告げられる時間と人員を、その場で時間軸に。">
   <!-- JSが動く環境でのみ .reveal を隠すためのクラス付与(JS無効時のフォールバック) -->
   <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
       --bg: #F2F2F2;
       --ink: #041A40;
-      --pastel-blue: #A8D8EA;
-      --pastel-orange: #FFB88A;
-      --pastel-yellow: #FFE39B;
-      --pastel-green: #B5E2B5;
-      --card-bg: #FFFFFF;
+      --accent: #FFE39B;
+      /* 本文用。背景(白/薄グレー)に対して十分なコントラストを確保 */
+      --body-text: #253A5E;
     }
 
     * {
@@ -41,6 +39,12 @@
       padding: 0 24px;
     }
 
+    .container-narrow {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
     /* ===== iPhone 風デバイス枠(スクリーンショット差し替え用) ===== */
     /* 画面部分は iPhone の比率(19.5:9)。img を1枚入れるだけで完成 */
     .phone {
@@ -60,7 +64,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(4, 26, 64, 0.4);
+      color: rgba(4, 26, 64, 0.45);
       font-size: 0.78rem;
     }
 
@@ -87,11 +91,32 @@
       display: block;
     }
 
-    /* ===== ヒーロー ===== */
+    /* ===== 1. ファーストビュー ===== */
     .hero {
       background: linear-gradient(var(--bg), #FFFFFF);
-      padding: 72px 0 88px;
+      padding: 32px 0 88px;
       overflow: hidden;
+    }
+
+    /* ロゴ+アプリ名(小さく) */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 56px;
+    }
+
+    .brand .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      box-shadow: 0 2px 8px rgba(4, 26, 64, 0.15);
+    }
+
+    .brand .brand-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
     }
 
     .hero-inner {
@@ -102,184 +127,216 @@
       text-align: center;
     }
 
-    .hero .app-icon {
-      width: 84px;
-      height: 84px;
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(4, 26, 64, 0.15);
-      margin-bottom: 28px;
-    }
-
     .hero h1 {
-      font-size: clamp(2.1rem, 5.5vw, 3rem);
-      letter-spacing: 0.04em;
-      line-height: 1.3;
-      margin-bottom: 16px;
-    }
-
-    .hero .catch {
-      font-size: clamp(1.15rem, 3.2vw, 1.5rem);
-      font-weight: 700;
-      margin-bottom: 20px;
-      background: linear-gradient(transparent 68%, var(--pastel-yellow) 68%);
-      display: inline-block;
-      padding: 0 4px;
+      font-size: clamp(1.75rem, 4.8vw, 2.7rem);
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+      margin-bottom: 24px;
     }
 
     .hero .lead {
-      font-size: 0.95rem;
-      color: rgba(4, 26, 64, 0.7);
+      font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+      color: var(--body-text);
       margin-bottom: 36px;
     }
 
     .hero-visual .phone {
-      width: clamp(190px, 46vw, 240px);
+      width: clamp(200px, 46vw, 250px);
     }
 
+    /* 近日公開ボタン(押せないラベル) */
     .store-badge {
       display: inline-block;
       background: var(--ink);
       color: #FFFFFF;
-      text-decoration: none;
       border-radius: 999px;
-      padding: 14px 34px;
-      font-size: 0.95rem;
+      padding: 14px 40px;
+      font-size: 1rem;
       font-weight: 700;
       line-height: 1.5;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .store-badge:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(4, 26, 64, 0.25);
+      cursor: default;
     }
 
     .store-badge small {
       display: block;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 400;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
-    /* ===== 特徴 ===== */
-    .features {
-      background: #FFFFFF;
-      padding: 96px 0;
-    }
-
+    /* ===== セクション共通 ===== */
     .section-title {
       text-align: center;
-      font-size: clamp(1.4rem, 3.6vw, 1.9rem);
+      font-size: clamp(1.45rem, 3.6vw, 1.9rem);
       letter-spacing: 0.03em;
       margin-bottom: 56px;
     }
 
-    .features-layout {
+    section p {
+      color: var(--body-text);
+    }
+
+    /* ===== 2. 課題 ===== */
+    .problems {
+      background: #FFFFFF;
+      padding: 96px 0;
+    }
+
+    .problem {
+      padding: 28px 0 28px 24px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .problem + .problem {
+      margin-top: 8px;
+    }
+
+    .problem h3 {
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .problem p {
+      font-size: 0.95rem;
+    }
+
+    /* ===== 3. 解決(3ステップ) ===== */
+    .steps {
+      background: var(--bg);
+      padding: 96px 0;
+    }
+
+    .step {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 56px;
+      gap: 32px;
+      text-align: center;
     }
 
-    .feature-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      width: 100%;
+    .step + .step {
+      margin-top: 72px;
     }
 
-    .feature {
-      background: #F6F7F9;
-      border-radius: 18px;
-      padding: 26px 24px;
-    }
-
-    /* 見出し上の色付きバー */
-    .feature::before {
-      content: "";
-      display: block;
-      width: 42px;
-      height: 6px;
-      border-radius: 999px;
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--ink);
+      font-size: 1.1rem;
+      font-weight: 700;
       margin-bottom: 16px;
     }
 
-    .feature.blue::before   { background: var(--pastel-blue); }
-    .feature.orange::before { background: var(--pastel-orange); }
-    .feature.yellow::before { background: var(--pastel-yellow); }
-    .feature.green::before  { background: var(--pastel-green); }
-
-    .feature h3 {
-      font-size: 1.05rem;
-      margin-bottom: 8px;
+    .step h3 {
+      font-size: clamp(1.2rem, 3.2vw, 1.5rem);
+      letter-spacing: 0.03em;
+      margin-bottom: 12px;
     }
 
-    .feature p {
-      font-size: 0.9rem;
-      color: rgba(4, 26, 64, 0.72);
+    .step p {
+      font-size: 0.95rem;
+      max-width: 440px;
     }
 
-    .features-visual .phone {
-      width: clamp(180px, 42vw, 210px);
+    /* ステップの説明のすぐ隣に対応するスクリーンショットを置く */
+    .step-visual .phone {
+      width: clamp(210px, 48vw, 250px);
     }
 
-    /* ===== PRO ===== */
+    /* ===== 4. やること ===== */
+    .todo {
+      background: #FFFFFF;
+      padding: 96px 0;
+    }
+
+    .todo-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      text-align: center;
+    }
+
+    .todo h2 {
+      font-size: clamp(1.35rem, 3.4vw, 1.8rem);
+      line-height: 1.6;
+      letter-spacing: 0.03em;
+      margin-bottom: 20px;
+    }
+
+    .todo p {
+      font-size: 0.95rem;
+      max-width: 480px;
+    }
+
+    .todo-visual .phone {
+      width: clamp(200px, 44vw, 230px);
+    }
+
+    /* ===== 5. PRO ===== */
     .pro {
       background: var(--ink);
       color: #FFFFFF;
       padding: 96px 0;
-      overflow: hidden;
     }
 
     .pro-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 56px;
-    }
-
-    .pro-copy {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 24px;
       text-align: center;
-      max-width: 480px;
     }
 
-    .pro-copy .pro-label {
+    .pro-label {
       display: inline-block;
-      background: var(--pastel-yellow);
+      background: var(--accent);
       color: var(--ink);
       font-size: 0.8rem;
       font-weight: 700;
       border-radius: 999px;
       padding: 2px 16px;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
     }
 
-    .pro-copy h2 {
-      font-size: clamp(1.4rem, 3.6vw, 1.9rem);
-      letter-spacing: 0.03em;
-      margin-bottom: 10px;
+    .pro .price {
+      color: var(--accent);
+      font-size: clamp(2.2rem, 6vw, 3rem);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
     }
 
-    .pro-copy .pro-note {
+    .pro .price small {
+      font-size: 0.5em;
+      margin-left: 6px;
+    }
+
+    .pro .pro-note {
       font-size: 0.9rem;
-      opacity: 0.85;
-      margin-bottom: 28px;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 12px 0 36px;
     }
 
-    .pro-copy ul {
+    .pro ul {
       list-style: none;
       text-align: left;
       display: inline-block;
     }
 
-    .pro-copy li {
-      font-size: 0.95rem;
-      padding: 12px 0 12px 28px;
+    .pro li {
+      font-size: 0.98rem;
+      padding: 13px 0 13px 28px;
       position: relative;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
     }
 
-    .pro-copy li::before {
+    .pro li::before {
       content: "";
       position: absolute;
       left: 4px;
@@ -288,45 +345,22 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
+      background: var(--accent);
     }
 
-    .pro-copy li:nth-child(1)::before { background: var(--pastel-blue); }
-    .pro-copy li:nth-child(2)::before { background: var(--pastel-orange); }
-    .pro-copy li:nth-child(3)::before { background: var(--pastel-green); }
-
-    .pro-visuals {
-      display: flex;
-      align-items: flex-start;
-      gap: 24px;
-    }
-
-    .pro-visuals .phone {
-      width: clamp(140px, 34vw, 175px);
-      background: #1D3767;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
-      border-radius: 28px;
-      padding: 8px;
-    }
-
-    .pro-visuals .phone-screen {
-      border-radius: 21px;
-    }
-
-    .pro-visuals .phone-screen::before {
-      background: #1D3767;
-    }
-
-    /* 2台目を少し下げてリズムを付ける */
-    .pro-visuals .phone:last-child {
-      margin-top: 36px;
-    }
-
-    /* ===== フッター ===== */
+    /* ===== 6. フッター ===== */
     footer {
       background: #E5E5E5;
-      padding: 40px 0 48px;
+      padding: 48px 0;
       text-align: center;
       font-size: 0.85rem;
+    }
+
+    footer .tagline {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 24px;
     }
 
     footer nav {
@@ -340,7 +374,7 @@
     }
 
     footer .contact {
-      color: rgba(4, 26, 64, 0.75);
+      color: var(--body-text);
       margin-bottom: 8px;
     }
 
@@ -349,7 +383,7 @@
     }
 
     footer .copyright {
-      color: rgba(4, 26, 64, 0.55);
+      color: rgba(4, 26, 64, 0.6);
       font-size: 0.8rem;
     }
 
@@ -383,15 +417,9 @@
     }
 
     /* ===== レスポンシブ(タブレット以上) ===== */
-    @media (min-width: 640px) {
-      .feature-list {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
     @media (min-width: 880px) {
       .hero {
-        padding: 96px 0 112px;
+        padding-bottom: 112px;
       }
 
       .hero-inner {
@@ -402,100 +430,160 @@
       }
 
       .hero-copy {
-        max-width: 480px;
+        max-width: 540px;
       }
 
-      .features-layout {
-        flex-direction: row;
-        gap: 72px;
-      }
-
-      .feature-list {
-        flex: 1;
-      }
-
-      .pro-inner {
+      .step {
         flex-direction: row;
         justify-content: space-between;
+        text-align: left;
         gap: 64px;
       }
 
-      .pro-copy {
+      .step-copy {
+        max-width: 480px;
+      }
+
+      /* 偶数ステップは画像を左に(説明と画像の対応は隣接で保つ) */
+      .step:nth-of-type(even) {
+        flex-direction: row-reverse;
+      }
+
+      .todo-inner {
+        flex-direction: row;
+        justify-content: space-between;
         text-align: left;
+        gap: 64px;
+      }
+
+      .todo-copy {
+        max-width: 520px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== ヒーロー ===== -->
+  <!-- ===== 1. ファーストビュー ===== -->
   <header class="hero">
-    <div class="container hero-inner">
-      <div class="hero-copy">
-        <img src="./icon.png" alt="明日の現場 アプリアイコン" class="app-icon">
-        <h1>明日の現場</h1>
-        <p class="catch">段取り八分を、十分に。</p>
-        <p class="lead">
-          外を歩き回る現場監督のための、明日の段取りアプリ。<br>
-          業者の予定と申し送りを、夕礼前にサッとまとめられます。
-        </p>
-        <!--
-          ★ App Store リンク差し替え箇所 ★
-          公開後、以下の href="#" を App Store の URL に差し替えてください。
-          例: https://apps.apple.com/jp/app/idXXXXXXXXXX
-        -->
-        <a href="#" class="store-badge">
-          App Store でダウンロード
-          <small>iPhone 向け</small>
-        </a>
+    <div class="container">
+      <!-- アプリ名はロゴ横に小さく。見出しより目立たせない -->
+      <div class="brand">
+        <img src="./icon.png" alt="明日の現場 アプリアイコン" class="brand-icon">
+        <span class="brand-name">明日の現場</span>
       </div>
-      <div class="hero-visual">
-        <!--
-          ▼ スクリーンショット差し込み箇所:日表示のタイムライン
-          画像が用意できたら <span> を削除し、下の img のコメントを外してください。
-        -->
-        <div class="phone">
-          <div class="phone-screen">
-            <span>スクリーンショット</span>
-            <!-- <img src="./screenshot-day-timeline.png" alt="日表示のタイムライン画面"> -->
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1>明日、誰が何をするか。<br>聞かれて、すぐ答えられますか。</h1>
+          <p class="lead">
+            夕礼で次々に告げられる時間と人員を、その場で時間軸に。<br>
+            あとで書き直す手間も、見返して探す時間もいりません。
+          </p>
+          <!--
+            ★ App Store 公開後の差し替え箇所 ★
+            リリース後は、この <span> を以下のようなリンクに差し替えてください。
+            <a href="https://apps.apple.com/jp/app/idXXXXXXXXXX" class="store-badge">App Store でダウンロード<small>iPhone 向け</small></a>
+          -->
+          <span class="store-badge">
+            近日公開
+            <small>App Store・iPhone 向け</small>
+          </span>
+        </div>
+        <div class="hero-visual">
+          <!--
+            ▼ スクリーンショット差し込み箇所:日表示のタイムライン
+            画像が用意できたら <span> を削除し、下の img のコメントを外してください。
+          -->
+          <div class="phone">
+            <div class="phone-screen">
+              <span>スクリーンショット</span>
+              <!-- <img src="./screenshot-day-timeline.png" alt="日表示のタイムライン画面"> -->
+            </div>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ===== 特徴 ===== -->
-  <section class="features">
+  <!-- ===== 2. 課題 ===== -->
+  <section class="problems">
+    <div class="container-narrow">
+      <h2 class="section-title reveal">こんなことになっていませんか</h2>
+      <div class="problem reveal">
+        <h3>言われた順に書くから、時間の重なりが見えない</h3>
+        <p>打ち合わせでは時間・人員・作業内容が次々に告げられます。<br>メモ帳に上から書いていくと、どの作業がバッティングしているのか分かりません。</p>
+      </div>
+      <div class="problem reveal">
+        <h3>見返さないと、誰がどこで何をしているか分からない</h3>
+        <p>結局あとで整理して書き直すことになります。<br>その時間が、毎日積み重なります。</p>
+      </div>
+      <div class="problem reveal">
+        <h3>「あの職人、明後日は何してる?」に即答できない</h3>
+        <p>聞かれた順の殴り書きでは、探すところから始まります。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. 解決(3ステップ) ===== -->
+  <section class="steps">
     <div class="container">
-      <h2 class="section-title reveal">現場のリズムに合わせた4つの特徴</h2>
-      <div class="features-layout">
-        <div class="feature-list">
-          <div class="feature blue reveal">
-            <h3>夕礼のスピードに追いつく入力</h3>
-            <p>タップ中心のすばやい操作で、夕礼で決まった明日の予定をその場で入力。現場を歩きながらでも片手でまとめられます。</p>
-          </div>
-          <div class="feature orange reveal">
-            <h3>1業者の1日をまとめて1件で</h3>
-            <p>「どの業者が・いつ・何をするか」を1件にまとめて登録。細切れの予定を何度も入力する手間がありません。</p>
-          </div>
-          <div class="feature yellow reveal">
-            <h3>時間軸で取り合いが見える</h3>
-            <p>業者ごとの予定を時間軸に並べて表示。作業の重なりや取り合いがひと目でわかり、段取りの穴に事前に気づけます。</p>
-          </div>
-          <div class="feature green reveal">
-            <h3>自分の段取りと申し送りも</h3>
-            <p>業者の予定だけでなく、自分のやることや翌日への申し送りも一緒に記録。明日の朝、迷わず動き出せます。</p>
-          </div>
+      <h2 class="section-title reveal">3ステップで、明日が決まる</h2>
+
+      <div class="step reveal">
+        <div class="step-copy">
+          <span class="step-num">1</span>
+          <h3>夕礼で、その場で入れる</h3>
+          <p>業者・作業・人数・時間をタップ中心で入力。<br>1業者の1日を1件にまとめるので、細切れに打ち込む必要がありません。</p>
         </div>
-        <div class="features-visual reveal">
+        <div class="step-visual">
           <!--
-            ▼ スクリーンショット差し込み箇所:他の日にも入れる(予定を別の日へ複製する画面)
+            ▼ スクリーンショット差し込み箇所:入力画面(業者・作業・人数・時間の入力)
             画像が用意できたら <span> を削除し、下の img のコメントを外してください。
           -->
           <div class="phone">
             <div class="phone-screen">
               <span>スクリーンショット</span>
-              <!-- <img src="./screenshot-copy-to-days.png" alt="予定を他の日にも入れる画面"> -->
+              <!-- <img src="./screenshot-input.png" alt="予定の入力画面"> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-copy">
+          <span class="step-num">2</span>
+          <h3>時間軸に、自動で並ぶ</h3>
+          <p>入れた順ではなく時間順に表示。作業の重なりがひと目で分かります。</p>
+        </div>
+        <div class="step-visual">
+          <!--
+            ▼ スクリーンショット差し込み箇所:日表示のタイムライン(時間順に並んだ状態)
+            画像が用意できたら <span> を削除し、下の img のコメントを外してください。
+          -->
+          <div class="phone">
+            <div class="phone-screen">
+              <span>スクリーンショット</span>
+              <!-- <img src="./screenshot-timeline.png" alt="時間軸に並んだ日表示画面"> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-copy">
+          <span class="step-num">3</span>
+          <h3>聞かれたら、開いて見せる</h3>
+          <p>日表示と週表示を切り替え。画像やテキストで書き出して送ることもできます。</p>
+        </div>
+        <div class="step-visual">
+          <!--
+            ▼ スクリーンショット差し込み箇所:週表示または書き出し画面
+            画像が用意できたら <span> を削除し、下の img のコメントを外してください。
+          -->
+          <div class="phone">
+            <div class="phone-screen">
+              <span>スクリーンショット</span>
+              <!-- <img src="./screenshot-week-export.png" alt="週表示・書き出し画面"> -->
             </div>
           </div>
         </div>
@@ -503,47 +591,50 @@
     </div>
   </section>
 
-  <!-- ===== PRO ===== -->
-  <section class="pro">
-    <div class="container pro-inner">
-      <div class="pro-copy reveal">
-        <span class="pro-label">PRO</span>
-        <h2>買い切りの PRO 版</h2>
-        <p class="pro-note">一度の購入でずっと使えます。サブスクリプションではありません。</p>
-        <ul>
-          <li>予定の書き出し（共有・記録用）</li>
-          <li>週表示で先の段取りまで確認</li>
-          <li>過去の予定・申し送りの閲覧</li>
-        </ul>
+  <!-- ===== 4. やること ===== -->
+  <section class="todo">
+    <div class="container todo-inner">
+      <div class="todo-copy reveal">
+        <h2>自分のやることは、いつも後回しになる</h2>
+        <p>
+          所長や先輩から頼まれ、職人に呼ばれ、気づけば自分の作業が進んでいない。<br>
+          やることリストに残して優先順位を付けておけば、手が空いたときに何から動くか迷いません。
+        </p>
       </div>
-      <div class="pro-visuals">
+      <div class="todo-visual reveal">
         <!--
-          ▼ スクリーンショット差し込み箇所:週表示
+          ▼ スクリーンショット差し込み箇所:やること画面(やることリスト)
           画像が用意できたら <span> を削除し、下の img のコメントを外してください。
         -->
-        <div class="phone reveal">
+        <div class="phone">
           <div class="phone-screen">
             <span>スクリーンショット</span>
-            <!-- <img src="./screenshot-week.png" alt="週表示画面"> -->
-          </div>
-        </div>
-        <!--
-          ▼ スクリーンショット差し込み箇所:書き出し
-          画像が用意できたら <span> を削除し、下の img のコメントを外してください。
-        -->
-        <div class="phone reveal">
-          <div class="phone-screen">
-            <span>スクリーンショット</span>
-            <!-- <img src="./screenshot-export.png" alt="予定の書き出し画面"> -->
+            <!-- <img src="./screenshot-todo.png" alt="やること画面"> -->
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== フッター ===== -->
+  <!-- ===== 5. PRO ===== -->
+  <section class="pro">
+    <div class="pro-inner reveal">
+      <span class="pro-label">PRO</span>
+      <p class="price">¥1,500<small>買い切り</small></p>
+      <p class="pro-note">一度の購入でずっと使えます。サブスクリプションではありません。</p>
+      <ul>
+        <li>予定の書き出し（画像・テキスト）</li>
+        <li>週表示で先の段取りまで確認</li>
+        <li>同じ作業を他の日にもまとめて登録</li>
+        <li>過去の記録をすべて閲覧</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 6. フッター ===== -->
   <footer>
     <div class="container">
+      <p class="tagline">段取り八分を、十分に。</p>
       <nav>
         <a href="./privacy.html">プライバシーポリシー</a>
         <a href="./terms.html">利用規約</a>
