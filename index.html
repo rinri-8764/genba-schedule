@@ -64,8 +64,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(4, 26, 64, 0.45);
-      font-size: 0.78rem;
+      color: rgba(4, 26, 64, 0.6);
+      font-size: 13px;
     }
 
     /* ノッチ(Dynamic Island 風)。端末サイズに合わせて可変 */
@@ -128,20 +128,30 @@
     }
 
     .hero h1 {
-      font-size: clamp(1.75rem, 4.8vw, 2.7rem);
-      line-height: 1.5;
-      letter-spacing: 0.03em;
+      font-size: clamp(30px, 8.5vw, 48px);
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
       margin-bottom: 24px;
     }
 
+    /* 1文=1ブロック。文節単位でしか折り返さない */
+    .hero h1 > span {
+      display: block;
+    }
+
+    .hero h1 span span {
+      display: inline-block;
+    }
+
     .hero .lead {
-      font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+      font-size: 16px;
       color: var(--body-text);
       margin-bottom: 36px;
     }
 
     .hero-visual .phone {
-      width: clamp(200px, 46vw, 250px);
+      width: clamp(150px, 36vw, 175px);
     }
 
     /* 近日公開ボタン(押せないラベル) */
@@ -159,7 +169,7 @@
 
     .store-badge small {
       display: block;
-      font-size: 0.72rem;
+      font-size: 13px;
       font-weight: 400;
       opacity: 0.85;
     }
@@ -167,46 +177,46 @@
     /* ===== セクション共通 ===== */
     .section-title {
       text-align: center;
-      font-size: clamp(1.45rem, 3.6vw, 1.9rem);
+      font-size: 27px;
+      font-weight: 700;
       letter-spacing: 0.03em;
-      margin-bottom: 56px;
+      margin-bottom: 40px;
     }
 
     section p {
       color: var(--body-text);
+      font-size: 16px;
+      line-height: 1.8;
     }
 
     /* ===== 2. 課題 ===== */
     .problems {
       background: #FFFFFF;
-      padding: 96px 0;
+      padding: 64px 0;
     }
 
     .problem {
-      padding: 28px 0 28px 24px;
+      padding: 12px 0 12px 28px;
       border-left: 4px solid var(--accent);
     }
 
     .problem + .problem {
-      margin-top: 8px;
+      margin-top: 32px;
     }
 
     .problem h3 {
-      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      font-size: 17px;
       line-height: 1.6;
-      margin-bottom: 10px;
-    }
-
-    .problem p {
-      font-size: 0.95rem;
+      margin-bottom: 12px;
     }
 
     /* ===== 3. 解決(3ステップ) ===== */
     .steps {
       background: var(--bg);
-      padding: 96px 0;
+      padding: 64px 0;
     }
 
+    /* テキストと枠を1つの塊として近接させ、塊同士は大きく離す */
     .step {
       display: flex;
       flex-direction: column;
@@ -216,7 +226,7 @@
     }
 
     .step + .step {
-      margin-top: 72px;
+      margin-top: 88px;
     }
 
     .step-num {
@@ -234,56 +244,54 @@
     }
 
     .step h3 {
-      font-size: clamp(1.2rem, 3.2vw, 1.5rem);
+      font-size: 17px;
       letter-spacing: 0.03em;
       margin-bottom: 12px;
     }
 
     .step p {
-      font-size: 0.95rem;
       max-width: 440px;
     }
 
     /* ステップの説明のすぐ隣に対応するスクリーンショットを置く */
     .step-visual .phone {
-      width: clamp(210px, 48vw, 250px);
+      width: clamp(140px, 34vw, 175px);
     }
 
     /* ===== 4. やること ===== */
     .todo {
       background: #FFFFFF;
-      padding: 96px 0;
+      padding: 64px 0;
     }
 
     .todo-inner {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 48px;
+      gap: 32px;
       text-align: center;
     }
 
     .todo h2 {
-      font-size: clamp(1.35rem, 3.4vw, 1.8rem);
+      font-size: 27px;
       line-height: 1.6;
       letter-spacing: 0.03em;
       margin-bottom: 20px;
     }
 
     .todo p {
-      font-size: 0.95rem;
       max-width: 480px;
     }
 
     .todo-visual .phone {
-      width: clamp(200px, 44vw, 230px);
+      width: clamp(130px, 30vw, 160px);
     }
 
     /* ===== 5. PRO ===== */
     .pro {
       background: var(--ink);
       color: #FFFFFF;
-      padding: 96px 0;
+      padding: 64px 0;
     }
 
     .pro-inner {
@@ -306,7 +314,7 @@
 
     .pro .price {
       color: var(--accent);
-      font-size: clamp(2.2rem, 6vw, 3rem);
+      font-size: 40px;
       font-weight: 700;
       line-height: 1.3;
       letter-spacing: 0.02em;
@@ -318,7 +326,7 @@
     }
 
     .pro .pro-note {
-      font-size: 0.9rem;
+      font-size: 13px;
       color: rgba(255, 255, 255, 0.9);
       margin: 12px 0 36px;
     }
@@ -330,7 +338,7 @@
     }
 
     .pro li {
-      font-size: 0.98rem;
+      font-size: 16px;
       padding: 13px 0 13px 28px;
       position: relative;
       border-top: 1px solid rgba(255, 255, 255, 0.18);
@@ -383,8 +391,8 @@
     }
 
     footer .copyright {
-      color: rgba(4, 26, 64, 0.6);
-      font-size: 0.8rem;
+      color: rgba(4, 26, 64, 0.75);
+      font-size: 13px;
     }
 
     /* ===== スクロール連動フェードイン ===== */
@@ -416,10 +424,12 @@
       }
     }
 
-    /* ===== レスポンシブ(タブレット以上) ===== */
+    /* ===== レスポンシブ(タブレット以上) =====
+       文字: 見出し48 / セクション見出し32 / 項目見出し20 / 本文17 / 補足15
+       余白: セクション間160(80+80) / 見出し-中身56 / 項目間40 / ステップ間120 */
     @media (min-width: 880px) {
       .hero {
-        padding-bottom: 112px;
+        padding-bottom: 80px;
       }
 
       .hero-inner {
@@ -429,19 +439,54 @@
         gap: 64px;
       }
 
+      /* 見出し2文がそれぞれ1行に収まる幅を確保 */
       .hero-copy {
-        max-width: 540px;
+        max-width: 760px;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero .lead,
+      section p {
+        font-size: 17px;
+      }
+
+      .store-badge small {
+        font-size: 15px;
+      }
+
+      .problems,
+      .steps,
+      .todo,
+      .pro {
+        padding: 80px 0;
+      }
+
+      .section-title {
+        font-size: 32px;
+        margin-bottom: 56px;
+      }
+
+      .problem + .problem {
+        margin-top: 40px;
+      }
+
+      .problem h3,
+      .step h3 {
+        font-size: 20px;
       }
 
       .step {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         text-align: left;
-        gap: 64px;
+        gap: 40px;
       }
 
       .step-copy {
-        max-width: 480px;
+        max-width: 520px;
       }
 
       /* 偶数ステップは画像を左に(説明と画像の対応は隣接で保つ) */
@@ -449,15 +494,37 @@
         flex-direction: row-reverse;
       }
 
+      .step + .step {
+        margin-top: 120px;
+      }
+
+      .todo h2 {
+        font-size: 32px;
+      }
+
       .todo-inner {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         text-align: left;
-        gap: 64px;
+        gap: 40px;
       }
 
       .todo-copy {
         max-width: 520px;
+      }
+
+      .pro .price {
+        font-size: 48px;
+      }
+
+      .pro .pro-note,
+      footer nav a,
+      footer .contact {
+        font-size: 15px;
+      }
+
+      .pro li {
+        font-size: 17px;
       }
     }
   </style>
@@ -474,7 +541,7 @@
       </div>
       <div class="hero-inner">
         <div class="hero-copy">
-          <h1>明日、誰が何をするか。<br>聞かれて、すぐ答えられますか。</h1>
+          <h1><span><span>明日、</span><span>誰が何をするか。</span></span><span><span>聞かれて、</span><span>すぐ答えられますか。</span></span></h1>
           <p class="lead">
             夕礼で次々に告げられる時間と人員を、その場で時間軸に。<br>
             あとで書き直す手間も、見返して探す時間もいりません。
