@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>プライバシーポリシー - 明日の現場</title>
+  <!-- JSが動く環境でのみヘッダーの透過挙動を有効にする -->
+  <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
       --bg: #F2F2F2;
@@ -37,6 +39,13 @@
       background: #FFFFFF;
       box-shadow: 0 1px 8px rgba(4, 26, 64, 0.08);
       z-index: 10;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* 最上部では透過し、スクロールしたら白背景+影(JS無効時は常に白) */
+    .js .site-header:not(.scrolled) {
+      background: transparent;
+      box-shadow: none;
     }
 
     .header-nav {
@@ -240,5 +249,17 @@
     <p class="contact">お問い合わせ：<a href="mailto:okuapps.0607@gmail.com">okuapps.0607@gmail.com</a></p>
     <p class="copyright">&copy; 2026 Takuya Okuzawa</p>
   </footer>
+
+  <script>
+    // ヘッダー: 最上部では透過、スクロールしたら白背景+影
+    (function () {
+      var header = document.querySelector('.site-header');
+      var onScroll = function () {
+        header.classList.toggle('scrolled', window.scrollY > 8);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 </body>
 </html>

@@ -27,10 +27,81 @@
       background: var(--bg);
       color: var(--ink);
       line-height: 1.8;
+      /* 固定ヘッダー分 */
+      padding-top: 60px;
     }
 
     img {
       max-width: 100%;
+    }
+
+    /* ===== 共通ヘッダー(3ページ共通) ===== */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #FFFFFF;
+      box-shadow: 0 1px 8px rgba(4, 26, 64, 0.08);
+      z-index: 10;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* 最上部では透過し、スクロールしたら白背景+影(JS無効時は常に白) */
+    .js .site-header:not(.scrolled) {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .header-nav {
+      max-width: 1040px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .header-brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+    }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-links a {
+      color: var(--body-text);
+      text-decoration: none;
+      font-size: 11px;
+      line-height: 1.4;
+      padding: 4px 0;
+      white-space: nowrap;
+    }
+
+    /* 現在開いているページ */
+    .header-links a.current {
+      color: var(--ink);
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent);
     }
 
     .container {
@@ -94,29 +165,8 @@
     /* ===== 1. ファーストビュー ===== */
     .hero {
       background: linear-gradient(var(--bg), #FFFFFF);
-      padding: 32px 0 88px;
+      padding: 48px 0 64px;
       overflow: hidden;
-    }
-
-    /* ロゴ+アプリ名(小さく) */
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 56px;
-    }
-
-    .brand .brand-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
-      box-shadow: 0 2px 8px rgba(4, 26, 64, 0.15);
-    }
-
-    .brand .brand-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
     }
 
     .hero-inner {
@@ -531,14 +581,24 @@
 </head>
 <body>
 
+  <!-- ===== 共通ヘッダー(3ページ共通) ===== -->
+  <header class="site-header">
+    <nav class="header-nav">
+      <a href="./index.html" class="header-brand">
+        <img src="./icon.png" alt="明日の現場 アプリアイコン">
+        <span>明日の現場</span>
+      </a>
+      <div class="header-links">
+        <a href="./index.html" class="current" aria-current="page">ホーム</a>
+        <a href="./privacy.html">プライバシーポリシー</a>
+        <a href="./terms.html">利用規約</a>
+      </div>
+    </nav>
+  </header>
+
   <!-- ===== 1. ファーストビュー ===== -->
   <header class="hero">
     <div class="container">
-      <!-- アプリ名はロゴ横に小さく。見出しより目立たせない -->
-      <div class="brand">
-        <img src="./icon.png" alt="明日の現場 アプリアイコン" class="brand-icon">
-        <span class="brand-name">明日の現場</span>
-      </div>
       <div class="hero-inner">
         <div class="hero-copy">
           <h1><span><span>明日、</span><span>誰が何をするか。</span></span><span><span>聞かれて、</span><span>すぐ答えられますか。</span></span></h1>
@@ -715,6 +775,14 @@
     // スクロール連動フェードイン
     // 画面内に入った .reveal に .is-visible を付け、一度表示したら unobserve する
     (function () {
+      // ヘッダー: 最上部では透過、スクロールしたら白背景+影
+      var header = document.querySelector('.site-header');
+      var onScroll = function () {
+        header.classList.toggle('scrolled', window.scrollY > 8);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
       var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
 
       // 同じセクション内の要素は 80ms ずつ遅延させて順に表示
