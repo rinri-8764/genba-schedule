@@ -8,7 +8,8 @@
     :root {
       --bg: #F2F2F2;
       --ink: #041A40;
-      --pastel-blue: #A8D8EA;
+      --accent: #FFE39B;
+      --body-text: #253A5E;
     }
 
     * {
@@ -22,32 +23,91 @@
       background: var(--bg);
       color: var(--ink);
       line-height: 1.9;
+      /* 固定ヘッダー分 */
+      padding-top: 60px;
     }
 
-    .container {
-      max-width: 720px;
+    /* ===== 共通ヘッダー ===== */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #FFFFFF;
+      box-shadow: 0 1px 8px rgba(4, 26, 64, 0.08);
+      z-index: 10;
+    }
+
+    .header-nav {
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 48px 20px 64px;
+      height: 100%;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .back-link {
-      display: inline-block;
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
       color: var(--ink);
-      font-size: 0.9rem;
-      margin-bottom: 24px;
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .header-brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+    }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-links a {
+      color: var(--body-text);
+      text-decoration: none;
+      font-size: 11px;
+      line-height: 1.4;
+      padding: 4px 0;
+      white-space: nowrap;
+    }
+
+    /* 現在開いているページ */
+    .header-links a.current {
+      color: var(--ink);
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    /* ===== 本文 ===== */
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
     }
 
     h1 {
-      font-size: 1.6rem;
+      font-size: 26px;
+      line-height: 1.5;
       padding-left: 14px;
-      border-left: 6px solid var(--pastel-blue);
-      margin-bottom: 32px;
+      border-left: 6px solid var(--ink);
+      margin-bottom: 40px;
     }
 
     .content {
       background: #FFFFFF;
       border-radius: 12px;
-      padding: 28px 24px;
+      padding: 32px 24px;
       box-shadow: 0 2px 8px rgba(4, 26, 64, 0.06);
     }
 
@@ -56,13 +116,14 @@
     }
 
     .content li {
-      font-size: 0.95rem;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(4, 26, 64, 0.1);
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--body-text);
     }
 
-    .content li:last-child {
-      border-bottom: none;
+    /* 区切り線ではなく余白で項目を分ける */
+    .content li + li {
+      margin-top: 28px;
     }
 
     .content a {
@@ -71,21 +132,90 @@
 
     .date {
       text-align: right;
-      font-size: 0.85rem;
-      color: rgba(4, 26, 64, 0.6);
-      margin-top: 24px;
+      font-size: 15px;
+      color: var(--body-text);
+      margin-top: 40px;
     }
 
     @media (min-width: 600px) {
-      .content {
-        padding: 36px 32px;
+      .header-brand {
+        font-size: 15px;
       }
+
+      .header-links {
+        gap: 24px;
+      }
+
+      .header-links a {
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .content {
+        padding: 40px 36px;
+      }
+    }
+
+    /* ===== フッター ===== */
+    footer {
+      background: #E5E5E5;
+      padding: 48px 20px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    footer .tagline {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 24px;
+    }
+
+    footer nav {
+      margin-bottom: 16px;
+    }
+
+    footer nav a {
+      color: var(--ink);
+      margin: 0 12px;
+      text-decoration: underline;
+    }
+
+    footer .contact {
+      color: var(--body-text);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    footer .contact a {
+      color: var(--ink);
+    }
+
+    footer .copyright {
+      color: rgba(4, 26, 64, 0.75);
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <nav class="header-nav">
+      <a href="./index.html" class="header-brand">
+        <img src="./icon.png" alt="明日の現場 アプリアイコン">
+        <span>明日の現場</span>
+      </a>
+      <div class="header-links">
+        <a href="./index.html">ホーム</a>
+        <a href="./privacy.html" class="current" aria-current="page">プライバシーポリシー</a>
+        <a href="./terms.html">利用規約</a>
+      </div>
+    </nav>
+  </header>
+
   <div class="container">
-    <a href="./index.html" class="back-link">&larr; トップページに戻る</a>
     <h1>プライバシーポリシー</h1>
     <div class="content">
       <ul>
@@ -100,5 +230,15 @@
       <p class="date">制定日：2026年7月28日</p>
     </div>
   </div>
+
+  <footer>
+    <p class="tagline">段取り八分を、十分に。</p>
+    <nav>
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="./terms.html">利用規約</a>
+    </nav>
+    <p class="contact">お問い合わせ：<a href="mailto:okuapps.0607@gmail.com">okuapps.0607@gmail.com</a></p>
+    <p class="copyright">&copy; 2026 Takuya Okuzawa</p>
+  </footer>
 </body>
 </html>
