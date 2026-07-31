@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>明日の現場 - 段取り八分を、十分に。</title>
   <meta name="description" content="現場監督のための段取りアプリ「明日の現場」。夕礼のスピードに追いつく入力で、明日の予定と申し送りをすばやく整理。">
+  <!-- JSが動く環境でのみ .reveal を隠すためのクラス付与(JS無効時のフォールバック) -->
+  <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
       --bg: #F2F2F2;
@@ -238,6 +240,78 @@
       font-size: 0.8rem;
     }
 
+    /* ===== スクロール連動フェードイン ===== */
+    .reveal {
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* JSが動くときだけ初期状態で隠す(JS失敗時も全要素が読めるように) */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .js .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* アニメーションを控える設定では最初から表示 */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        transition: none;
+      }
+
+      .js .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ===== スクリーンショットのプレースホルダー ===== */
+    /* iPhone の画面比率(19.5:9)。img を入れるだけで差し替え可能 */
+    .screenshot {
+      aspect-ratio: 9 / 19.5;
+      width: min(240px, 64vw);
+      margin: 0 auto;
+      background: #E5E5E5;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(4, 26, 64, 0.45);
+      font-size: 0.85rem;
+      overflow: hidden;
+    }
+
+    .screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero .screenshot {
+      margin-top: 40px;
+    }
+
+    .features .screenshot {
+      margin-top: 32px;
+    }
+
+    .screenshot-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .screenshot-row .screenshot {
+      margin: 0;
+    }
+
     /* ===== レスポンシブ(タブレット以上) ===== */
     @media (min-width: 600px) {
       .hero h1 {
@@ -275,30 +349,46 @@
         App Store でダウンロード
         <small>iPhone 向け</small>
       </a>
+      <!--
+        ▼ スクリーンショット差し込み箇所：日表示のタイムライン
+        画像が用意できたら <span> を削除し、下の img のコメントを外してください。
+      -->
+      <div class="screenshot">
+        <span>スクリーンショット</span>
+        <!-- <img src="./screenshot-day-timeline.png" alt="日表示のタイムライン画面"> -->
+      </div>
     </div>
   </header>
 
   <!-- ===== 特徴 ===== -->
   <section class="features">
     <div class="container">
-      <h2 class="section-title">現場のリズムに合わせた4つの特徴</h2>
+      <h2 class="section-title reveal">現場のリズムに合わせた4つの特徴</h2>
       <div class="feature-list">
-        <div class="feature blue">
+        <div class="feature blue reveal">
           <h3>夕礼のスピードに追いつく入力</h3>
           <p>タップ中心のすばやい操作で、夕礼で決まった明日の予定をその場で入力。現場を歩きながらでも片手でまとめられます。</p>
         </div>
-        <div class="feature orange">
+        <div class="feature orange reveal">
           <h3>1業者の1日をまとめて1件で</h3>
           <p>「どの業者が・いつ・何をするか」を1件にまとめて登録。細切れの予定を何度も入力する手間がありません。</p>
         </div>
-        <div class="feature yellow">
+        <div class="feature yellow reveal">
           <h3>時間軸で取り合いが見える</h3>
           <p>業者ごとの予定を時間軸に並べて表示。作業の重なりや取り合いがひと目でわかり、段取りの穴に事前に気づけます。</p>
         </div>
-        <div class="feature green">
+        <div class="feature green reveal">
           <h3>自分の段取りと申し送りも</h3>
           <p>業者の予定だけでなく、自分のやることや翌日への申し送りも一緒に記録。明日の朝、迷わず動き出せます。</p>
         </div>
+      </div>
+      <!--
+        ▼ スクリーンショット差し込み箇所：他の日にも入れる(予定を別の日へ複製する画面)
+        画像が用意できたら <span> を削除し、下の img のコメントを外してください。
+      -->
+      <div class="screenshot reveal">
+        <span>スクリーンショット</span>
+        <!-- <img src="./screenshot-copy-to-days.png" alt="予定を他の日にも入れる画面"> -->
       </div>
     </div>
   </section>
@@ -306,7 +396,7 @@
   <!-- ===== PRO ===== -->
   <section class="pro">
     <div class="container">
-      <div class="pro-card">
+      <div class="pro-card reveal">
         <span class="pro-label">PRO</span>
         <h2>買い切りの PRO 版</h2>
         <p class="pro-note">一度の購入でずっと使えます。サブスクリプションではありません。</p>
@@ -315,6 +405,24 @@
           <li>週表示で先の段取りまで確認</li>
           <li>過去の予定・申し送りの閲覧</li>
         </ul>
+      </div>
+      <div class="screenshot-row">
+        <!--
+          ▼ スクリーンショット差し込み箇所：週表示
+          画像が用意できたら <span> を削除し、下の img のコメントを外してください。
+        -->
+        <div class="screenshot reveal">
+          <span>スクリーンショット</span>
+          <!-- <img src="./screenshot-week.png" alt="週表示画面"> -->
+        </div>
+        <!--
+          ▼ スクリーンショット差し込み箇所：書き出し
+          画像が用意できたら <span> を削除し、下の img のコメントを外してください。
+        -->
+        <div class="screenshot reveal">
+          <span>スクリーンショット</span>
+          <!-- <img src="./screenshot-export.png" alt="予定の書き出し画面"> -->
+        </div>
       </div>
     </div>
   </section>
@@ -330,6 +438,40 @@
       <p class="copyright">&copy; 2026 Takuya Okuzawa</p>
     </div>
   </footer>
+
+  <script>
+    // スクロール連動フェードイン
+    // 画面内に入った .reveal に .is-visible を付け、一度表示したら unobserve する
+    (function () {
+      var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+      // 同じセクション内の要素は 80ms ずつ遅延させて順に表示
+      var groups = new Map();
+      els.forEach(function (el) {
+        var section = el.closest('section, header, footer') || document.body;
+        var index = groups.get(section) || 0;
+        el.style.transitionDelay = (index * 80) + 'ms';
+        groups.set(section, index + 1);
+      });
+
+      if (!('IntersectionObserver' in window)) {
+        // 未対応環境ではすべて表示
+        els.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      els.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
 
 </body>
 </html>
