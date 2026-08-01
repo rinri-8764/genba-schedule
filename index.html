@@ -172,6 +172,21 @@
       display: block;
     }
 
+    /* 書き出し画像はアプリ画面ではないため、iPhone枠ではなく角丸カードで見せる */
+    .export-card {
+      width: clamp(150px, 36vw, 190px);
+      border-radius: 16px;
+      box-shadow: 0 24px 48px rgba(4, 26, 64, 0.18);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .export-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     /* ===== 1. ファーストビュー ===== */
     .hero {
       background: linear-gradient(var(--bg), #FFFFFF);
@@ -628,7 +643,7 @@
   <header class="site-header">
     <nav class="header-nav">
       <a href="./index.html" class="header-brand">
-        <img src="./icon.png" alt="明日の現場 アプリアイコン">
+        <img src="./images/icon.png" alt="明日の現場 アプリアイコン">
         <span>明日の現場</span>
       </a>
       <div class="header-links">
@@ -660,14 +675,10 @@
           </span>
         </div>
         <div class="hero-visual">
-          <!--
-            ▼ スクリーンショット差し込み箇所:日表示のタイムライン
-            画像が用意できたら <span> を削除し、下の img のコメントを外してください。
-          -->
+          <!-- ファーストビューの画像のため loading="lazy" は付けない -->
           <div class="phone">
             <div class="phone-screen">
-              <span>スクリーンショット</span>
-              <!-- <img src="./screenshot-day-timeline.png" alt="日表示のタイムライン画面"> -->
+              <img src="./images/01_hero_day.png" alt="明日の現場の日表示画面。業者ごとの予定が時間軸に並んでいる">
             </div>
           </div>
         </div>
@@ -706,14 +717,9 @@
           <p>業者・作業・人数・時間をタップ中心で入力。<br>1業者の1日を1件にまとめるので、細切れに打ち込む必要がありません。</p>
         </div>
         <div class="step-visual">
-          <!--
-            ▼ スクリーンショット差し込み箇所:入力画面(業者・作業・人数・時間の入力)
-            画像が用意できたら <span> を削除し、下の img のコメントを外してください。
-          -->
           <div class="phone">
             <div class="phone-screen">
-              <span>スクリーンショット</span>
-              <!-- <img src="./screenshot-input.png" alt="予定の入力画面"> -->
+              <img src="./images/02_step1_add.png" alt="作業を追加するシート。業者・作業・人数・時間をタップで入力できる" loading="lazy">
             </div>
           </div>
         </div>
@@ -726,15 +732,9 @@
           <p>入れた順ではなく時間順に表示。作業の重なりがひと目で分かります。</p>
         </div>
         <div class="step-visual">
-          <!--
-            ▼ スクリーンショット差し込み箇所:日表示のタイムライン(時間順に並んだ状態)
-            画像が用意できたら <span> を削除し、下の img のコメントを外してください。
-          -->
-          <div class="phone">
-            <div class="phone-screen">
-              <span>スクリーンショット</span>
-              <!-- <img src="./screenshot-timeline.png" alt="時間軸に並んだ日表示画面"> -->
-            </div>
+          <!-- 書き出した画像そのもの(アプリ画面ではない)ため、iPhone枠ではなく角丸カードで表示 -->
+          <div class="export-card">
+            <img src="./images/03_step2_export.png" alt="書き出した1日の予定表の画像。現場名と日付、朝礼・夕礼の連絡、時間順の作業一覧" loading="lazy">
           </div>
         </div>
       </div>
@@ -746,14 +746,9 @@
           <p>日表示と週表示を切り替え。画像やテキストで書き出して送ることもできます。</p>
         </div>
         <div class="step-visual">
-          <!--
-            ▼ スクリーンショット差し込み箇所:週表示または書き出し画面
-            画像が用意できたら <span> を削除し、下の img のコメントを外してください。
-          -->
           <div class="phone">
             <div class="phone-screen">
-              <span>スクリーンショット</span>
-              <!-- <img src="./screenshot-week-export.png" alt="週表示・書き出し画面"> -->
+              <img src="./images/04_step3_week.png" alt="週表示画面。1週間の予定を日ごとにまとめて確認できる" loading="lazy">
             </div>
           </div>
         </div>
@@ -772,14 +767,9 @@
         </p>
       </div>
       <div class="todo-visual reveal">
-        <!--
-          ▼ スクリーンショット差し込み箇所:やること画面(やることリスト)
-          画像が用意できたら <span> を削除し、下の img のコメントを外してください。
-        -->
         <div class="phone">
           <div class="phone-screen">
-            <span>スクリーンショット</span>
-            <!-- <img src="./screenshot-todo.png" alt="やること画面"> -->
+            <img src="./images/05_todo.png" alt="やることリスト画面。自分の作業を優先順位を付けて管理できる" loading="lazy">
           </div>
         </div>
       </div>
